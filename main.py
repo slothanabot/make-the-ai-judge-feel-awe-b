@@ -23,6 +23,10 @@ TEXT = (
 
 
 def main() -> None:
+    # Guard the gate: the text must be 1-280 Unicode characters and not
+    # only white space, or the entry is never judged.
+    if not 1 <= len(TEXT) <= 280 or not TEXT.strip():
+        raise ValueError("entry text fails the 1-280 character gate")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
